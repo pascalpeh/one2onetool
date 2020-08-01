@@ -1,1 +1,7 @@
-Test push
+This file is used to test webhooks and store quick command usage
+
+# Docker commands to run (Default DATA_FILE will be Questions.json)
+docker container run --name one2onetool -d -p 3000:3000 pascalpeh/one2onetool
+
+# Docker commands to run with parameter DATA_FILE set to "Questions-test.json"
+docker container run -e DATA_FILE=Questions-test.json --name one2onetool -d -p 3000:3000 pascalpeh/one2onetool

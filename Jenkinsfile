@@ -7,7 +7,7 @@ pipeline {
 		githubPush()
 	}    
     stages {
-        stage('Build') {
+        stage('Echo Hello World') {
             when {
                 branch 'master'
             }
@@ -25,6 +25,20 @@ pipeline {
                     app = docker.build("pascalpeh/one2onetool")
                     app.inside {
                         sh 'echo $(curl localhost:3000)'
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image to Docker.io') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
                     }
                 }
             }
