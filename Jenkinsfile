@@ -15,5 +15,21 @@ pipeline {
                 echo 'Hello World'
             }
         }
+
+        stage('Build Docker Image') {
+            when {
+                branch 'master'
+            }
+            steps {
+                script {
+                    app = docker.build("pascalpeh/one2onetool")
+                    app.inside {
+                        sh 'echo $(curl localhost:3000)'
+                    }
+                }
+            }
+        }
+
+
     }
 }
