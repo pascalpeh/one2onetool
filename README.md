@@ -21,6 +21,12 @@ This repository demonstrates the use of Jenkins pipelines for performing the fol
 * GitHub plugin (For connecting to github)
 * GitHub Integration (For using Github to trigger builds and webhooks)
 
+## Test Environment
+OS: RedHat version 7.7
+Jenkins version 2.250
+NodeJS version 12.18.3
+Git version 1.8.3.1
+
 ## How to use/run
 1. There are 3 branches in this repo -> Master, Staging and Release. The "Jenkinsfile" & "Dockerfile" are added only in Staging and Release branch which is used to run the Jenkins pipline in each branch
 2. Create a "Multi-branch Pipeline" in Jenkins that points to this Github repo. Under "Build Configuration", ensure that it uses the mode "by Jenkinsfile" and Script Path is "Jenkinsfile"
