@@ -6,5 +6,5 @@ COPY . /app
 RUN mkdir -p /app; chown -R appuser:appgroup /app; chown -R appuser:appgroup /app/node_modules
 USER appuser
 RUN npm install
-EXPOSE 3000
+EXPOSE 3001
 CMD ["node", "index.js"]

@@ -3,6 +3,9 @@ pipeline {
 	 parameters {
         string(name: 'DATA_FILE', defaultValue: 'Questions-test.json', description: 'Data file for staging environment')
         string(name: 'RECIPIENT_EMAIL', defaultValue: 'pascalpeh@hotmail.com', description: 'Email address to receive notifications')
+        string(name: 'GITHUB_REPO_URL', defaultValue: 'https://github.com/pascalpeh/one2onetool', description: 'URL of Github repo')
+        string(name: 'DOCKER_IMAGE', defaultValue: 'pascalpeh/one2onetool-stage', description: 'Name of docker image to create')
+        string(name: 'CONTAINER_NAME', defaultValue: 'one2onetool-stage', description: 'Docker container name to run')
 	 }
 	 triggers {
 		githubPush()
@@ -26,7 +29,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    app = docker.build("pascalpeh/one2onetool-stage")
+                    app = docker.build("${DOCKER_IMAGE}")
                     app.inside {
                         sh 'echo $(curl localhost:3000)'
                     }
@@ -46,15 +49,15 @@ pipeline {
         stage('Deploy Docker Container') {
             steps {
                     script {
-                        sh "docker pull pascalpeh/one2onetool-stage:${env.BUILD_NUMBER}"
+                        sh "docker pull ${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
                         try {
-                            sh "docker stop one2onetool-stage"
-                            sh "docker rm one2onetool-stage"
+                            sh "docker stop {CONTAINER_NAME}"
+                            sh "docker rm {CONTAINER_NAME}"
                             sh "docker image prune -a -f"
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "docker run -e DATA_FILE=${DATA_FILE} --restart always --name one2onetool-stage -p 3001:3000 -d pascalpeh/one2onetool-stage:${env.BUILD_NUMBER}"
+                        sh "docker run -e DATA_FILE=${DATA_FILE} --restart always --name {CONTAINER_NAME} -p 3001:3000 -d ${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
                     }
             }
         }
