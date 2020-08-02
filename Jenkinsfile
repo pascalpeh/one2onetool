@@ -2,6 +2,9 @@ pipeline {
      agent any
 	 parameters {
         string(name: 'RECIPIENT_EMAIL', defaultValue: 'pascalpeh@hotmail.com', description: 'Email address to receive notifications')
+        string(name: 'GITHUB_REPO_URL', defaultValue: 'https://github.com/pascalpeh/one2onetool', description: 'URL of Github repo')
+        string(name: 'DOCKER_IMAGE', defaultValue: 'pascalpeh/one2onetool', description: 'Name of docker image to create')
+        string(name: 'CONTAINER_NAME', defaultValue: 'one2onetool', description: 'Docker container name to run')
 	 }
 	 triggers {
 		githubPush()
@@ -9,7 +12,7 @@ pipeline {
      stages {  
         stage('Clone from Github') {
              steps {
-                 git branch: 'staging', url: 'https://github.com/pascalpeh/one2onetool'
+                 git branch: 'release', url: '${GITHUB_REPO_URL}'
              }  
         }
         stage('Install npm dependencies') {
@@ -25,7 +28,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    app = docker.build("pascalpeh/one2onetool")
+                    app = docker.build("${DOCKER_IMAGE}")
                     app.inside {
                         sh 'echo $(curl localhost:3000)'
                     }
@@ -45,25 +48,21 @@ pipeline {
         stage('Deploy Docker Container') {
             steps {
                     script {
-                        sh "docker pull pascalpeh/one2onetool:${env.BUILD_NUMBER}"
+                        sh "docker pull ${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
                         try {
-                            sh "docker stop one2onetool"
-                            sh "docker rm one2onetool"
+                            sh "docker stop ${CONTAINER_NAME}"
+                            sh "docker rm ${CONTAINER_NAME}"
                             sh "docker image prune -a -f"
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "docker run --restart always --name one2onetool -p 3000:3000 -d pascalpeh/one2onetool:${env.BUILD_NUMBER}"
+                        sh "docker run --restart always --name ${CONTAINER_NAME} -p 3000:3000 -d ${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
                     }
             }
         }
      }  
 	 
      post { 
-         always {  
-             echo 'Start of Production Release branch'
-			 mail bcc: '', body: "<b>Jenkins Job Details</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Jenkins build url: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "Jenkins job has started (Project name: ${env.JOB_NAME})", to: "${RECIPIENT_EMAIL}"; 
-         }  
          success {  
              echo 'Production Release branch run successfully!'  
 			 mail bcc: '', body: "<b>Jenkins Job Details</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Jenkins build url: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "Jenkins job ran successfully. Great Work! :) (Project name: ${env.JOB_NAME})", to: "${RECIPIENT_EMAIL}";  
