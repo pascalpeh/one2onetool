@@ -7,11 +7,23 @@ pipeline {
 		githubPush()
 	 }
      stages {  
-         stage('Clone from Github') {
+        stage('Clone from Github') {
              steps {
                  git branch: 'staging', url: 'https://github.com/pascalpeh/one2onetool'
              }  
-         }  
+        }
+
+        stage('Install npm dependencies') {
+             steps {
+                 sh 'npm install'
+             }  
+        }
+
+        stage('Start nodejs unit tests') {
+             steps {
+                 sh 'npm run test'
+             }  
+        }  
      }  
 	 
      post {  
