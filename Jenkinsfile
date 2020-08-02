@@ -57,7 +57,7 @@ pipeline {
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "docker run -e DATA_FILE=${DATA_FILE} --restart always --name {CONTAINER_NAME} -p 3001:3000 -d ${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
+                        sh "docker run -e DATA_FILE=${DATA_FILE} --restart always --name ${CONTAINER_NAME} -p 3001:3000 -d ${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
                     }
             }
         }
