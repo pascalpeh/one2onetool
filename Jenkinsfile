@@ -25,9 +25,19 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    app = docker.build("pascalpeh/one2onetool")
+                    app = docker.build("pascalpeh/one2onetool-stage")
                     app.inside {
                         sh 'echo $(curl localhost:3000)'
+                    }
+                }
+            }
+        }
+        stage('Push Docker Image to Docker.io') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
                     }
                 }
             }
