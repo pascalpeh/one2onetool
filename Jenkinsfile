@@ -25,7 +25,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    app = docker.build("pascalpeh/one2onetool-stage")
+                    app = docker.build("pascalpeh/one2onetool")
                     app.inside {
                         sh 'echo $(curl localhost:3000)'
                     }
