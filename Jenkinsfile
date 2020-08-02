@@ -1,7 +1,7 @@
 pipeline {  
      agent any
 	 parameters {
-        string(name: 'DATA_FILE', defaultValue: 'Questions-Test.json', description: 'Data file for staging environment')
+        string(name: 'DATA_FILE', defaultValue: 'Questions-test.json', description: 'Data file for staging environment')
 	 }
 	 triggers {
 		githubPush()
@@ -32,7 +32,7 @@ pipeline {
                 }
             }
         }
-        stage('Push Docker Image to Docker.io') {
+        stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_login') {
@@ -59,7 +59,7 @@ pipeline {
         }
      }  
 	 
-     post {  
+     post { 
          always {  
              echo 'Start of Staging branch'
 			 mail bcc: '', body: "<b>Jenkins Job Details</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Jenkins build url: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "Jenkins job has started (Project name: ${env.JOB_NAME})", to: "pascalpeh@hotmail.com"; 
