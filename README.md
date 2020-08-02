@@ -7,6 +7,7 @@ This repository demonstrates the use of Jenkins pipelines for performing the fol
 * Build docker image from node.js script in this repo
 * Push Docker images to Docker hub
 * Pulls docker images from docker hub and runs the containers on Jenkins server (Not recommended if this is running on a real production environment)
+* Docker hub user credentials for pushing docker images
 
 ## Requirements
 * A server running Centos/RedHat with Jenkins, docker, node.js, git packages installed
@@ -23,9 +24,10 @@ This repository demonstrates the use of Jenkins pipelines for performing the fol
 ## How to use/run
 1. There are 3 branches in this repo -> Master, Staging and Release. The "Jenkinsfile" & "Dockerfile" are added only in Staging and Release branch which is used to run the Jenkins pipline in each branch
 2. Create a "Multi-branch Pipeline" in Jenkins that points to this Github repo. Under "Build Configuration", ensure that it uses the mode "by Jenkinsfile" and Script Path is "Jenkinsfile"
-3. The Jenkinsfile in each branch (Staging and Release) will automatically be detected by Jenkins and used to create jobs for respective branch
-4. Both containers for staging and release branch will run on the Jenkins Server concurrently with different port numbers. Staging branch container will run on port number 3001 and release branch container will run on port number 3000.
-5. To change the Jenkins pipeline jobs or parameters for each branch, modify the Jenkinsfile in each branch accordingly as shown below
+3. Create a docker login credentials (id: docker_hub_login) for pushing docker images to docker hub
+4. The Jenkinsfile in each branch (Staging and Release) will automatically be detected by Jenkins and used to create jobs for respective branch
+5. Both containers for staging and release branch will run on the Jenkins Server concurrently with different port numbers. Staging branch container will run on port number 3001 and release branch container will run on port number 3000.
+6. To change the Jenkins pipeline jobs or parameters for each branch, modify the Jenkinsfile in each branch accordingly as shown below
 
 
 ### Staging Branch variables ("Jenkinsfile")
