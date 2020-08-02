@@ -26,6 +26,7 @@ This repository demonstrates the use of Jenkins pipelines for performing the fol
 * Jenkins version 2.250
 * NodeJS version 12.18.3
 * Git version 1.8.3.1
+* Docker Engine community version 19.03.12
 
 ## How to use/run
 1. There are 3 branches in this repo -> Master, Staging and Release. The "Jenkinsfile" & "Dockerfile" are added only in Staging and Release branch which is used to run the Jenkins pipline in each branch
