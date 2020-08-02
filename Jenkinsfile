@@ -51,8 +51,8 @@ pipeline {
                     script {
                         sh "docker pull ${DOCKER_IMAGE}:${env.BUILD_NUMBER}"
                         try {
-                            sh "docker stop {CONTAINER_NAME}"
-                            sh "docker rm {CONTAINER_NAME}"
+                            sh "docker stop ${CONTAINER_NAME}"
+                            sh "docker rm ${CONTAINER_NAME}"
                             sh "docker image prune -a -f"
                         } catch (err) {
                             echo: 'caught error: $err'
