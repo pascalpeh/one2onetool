@@ -3,7 +3,7 @@
 ## Overview
 This repository demonstrates the use of Jenkins pipelines for performing the following
 * Pull repo from Github
-* Install npm dependencies and run node unit test
+* Install npm dependencies and run nodejs unit test
 * Build docker image from node.js script in this repo
 * Push Docker images to Docker hub
 * Pulls docker images from docker hub and runs the containers on Jenkins server (Not recommended if this is running on a real production environment)
