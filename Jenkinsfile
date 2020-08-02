@@ -9,7 +9,7 @@ pipeline {
      stages {  
          stage('Clone from Github') {
              steps {
-                 git 'https://github.com/pascalpeh/one2onetool'
+                 git branch: 'staging', url: 'https://github.com/pascalpeh/one2onetool'
              }  
          }  
      }  
