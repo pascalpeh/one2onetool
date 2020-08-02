@@ -53,7 +53,7 @@ pipeline {
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
-                        sh "docker run --restart always --name one2onetool-stage -p 3000:3000 -d pascalpeh/one2onetool:${env.BUILD_NUMBER}"
+                        sh "docker run --restart always --name one2onetool -p 3000:3000 -d pascalpeh/one2onetool:${env.BUILD_NUMBER}"
                     }
             }
         }
