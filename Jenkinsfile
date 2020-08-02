@@ -49,7 +49,7 @@ pipeline {
                         try {
                             sh "docker stop one2onetool-stage"
                             sh "docker rm one2onetool-stage"
-                            sh "docker images purge"
+                            sh "docker image prune -a -f"
                         } catch (err) {
                             echo: 'caught error: $err'
                         }
@@ -66,7 +66,7 @@ pipeline {
          }  
          success {  
              echo 'Staging branch run successfully!'  
-			 mail bcc: '', body: "<b>Jenkins Job Details</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Jenkins build url: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "Jenkins job ran successfully. Great Job! :) (Project name: ${env.JOB_NAME})", to: "pascalpeh@hotmail.com";  
+			 mail bcc: '', body: "<b>Jenkins Job Details</b><br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> Jenkins build url: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "Jenkins job ran successfully. Great Work! :) (Project name: ${env.JOB_NAME})", to: "pascalpeh@hotmail.com";  
          }  
          failure {
              echo 'Staging branch has failed. Please check :('  
