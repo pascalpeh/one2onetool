@@ -9,7 +9,7 @@ pipeline {
      stages {  
          stage('Start Staging') {
              steps {  
-                 sh "Start of Staging branch"
+                 sh 'echo "Staging branch Started"'
              }  
          }  
      }  
