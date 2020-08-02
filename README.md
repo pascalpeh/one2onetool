@@ -1,4 +1,4 @@
-# New Readme File
+# Updated Readme File
 
 ## Overview
 This repository demonstrates the use of Jenkins pipelines for performing the following
@@ -21,9 +21,9 @@ This repository demonstrates the use of Jenkins pipelines for performing the fol
 * GitHub Integration (For using Github to trigger builds and webhooks)
 
 ## How to use/run
-1. There are 3 branches in this repo -> Master, Staging and Release. The "Jenkinsfile" & "Dockerfile" are added only in Staging and Release branch which is used to trigger the Jenkins pipline
+1. There are 3 branches in this repo -> Master, Staging and Release. The "Jenkinsfile" & "Dockerfile" are added only in Staging and Release branch which is used to run the Jenkins pipline in each branch
 2. Create a "Multi-branch Pipeline" in Jenkins that points to this Github repo. Under "Build Configuration", ensure that it uses the mode "by Jenkinsfile" and Script Path is "Jenkinsfile"
-3. The Jenkinsfile in each branch (Staging and Release) will be used to create jobs for respective branch
+3. The Jenkinsfile in each branch (Staging and Release) will automatically be detected by Jenkins and used to create jobs for respective branch
 4. Both containers for staging and release branch will run on the Jenkins Server concurrently with different port numbers. Staging branch container will run on port number 3001 and release branch container will run on port number 3000.
 5. To change the Jenkins pipeline jobs or parameters for each branch, modify the Jenkinsfile in each branch accordingly as shown below
 
