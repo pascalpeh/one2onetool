@@ -42,6 +42,21 @@ pipeline {
                 }
             }
         }
+        stage('Deploy Docker Container') {
+            steps {
+                    script {
+                        sh "docker pull pascalpeh/one2onetool-stage:${env.BUILD_NUMBER}"
+                        try {
+                            sh "docker stop one2onetool-stage"
+                            sh "docker rm one2onetool-stage"
+                            sh "docker images purge"
+                        } catch (err) {
+                            echo: 'caught error: $err'
+                        }
+                        sh "docker run -e DATA_FILE=${DATA_FILE} --restart always --name one2onetool-stage -p 3001:3000 -d pascalpeh/one2onetool-stage:${env.BUILD_NUMBER}"
+                    }
+            }
+        }
      }  
 	 
      post {  
