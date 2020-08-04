@@ -7,13 +7,13 @@ This repository demonstrates the use of Jenkins pipelines for performing the fol
 * Build docker image from node.js script in this repo
 * Push Docker images to Docker hub
 * Pulls docker images from docker hub and runs the containers on Jenkins server (Not recommended if this is running on a real production environment)
-* Docker hub user credentials for pushing docker images
 
 ## Requirements
 * A server running Centos/RedHat with Jenkins, docker, node.js, git packages installed
 * Server with public IP address (For Github to send webhooks)
 * SMTP server for sending email notifications (Can use free Gmail)
 * Github with webhooks configured to Jenkins Server
+* Docker hub user credentials for pushing docker images
 
 ## Jenkins Server Plugins Requirement
 * Pipeline: Multibranch (For running multibranch pipeline)
